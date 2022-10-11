@@ -15,6 +15,30 @@
 int decToBin(int decNum);
 bool hasEvenParity(int binNum);
 
+int decToBin(int decNum){ // converts decimal number to binary 
+  int binaryNumArray[8] = {0,0,0,0,0,0,0,0};
+  int binaryNum = 0;
+  int i = 0;
+  int placeCount = 10000000;
+  while (decNum != 0)
+  {
+    binaryNumArray[i++] = decNum % 2;
+    decNum /= 2;
+  }
+
+  for (int j = 8; j > 0; j--)
+  {
+    binaryNum += binaryNumArray[j - 1] * placeCount;
+    placeCount /= 10;
+  }
+
+  return binaryNum;
+}
+
+bool hasEvenParity(int binNum, int parityBit){
+  return true;
+}
+
 int main(void)
 {
   FILE *dataFiles[NUM_FILES];
@@ -41,15 +65,21 @@ int main(void)
 
   printf("** Part 1 - Parity Check Processing\n\n\n");
   int dataBytes[8];
-  int parityByte;
-  fscanf(dataFiles[0], "%3d%4d%4d%4d%4d%4d%4d%4d%4d", &dataBytes[0], &dataBytes[1], &dataBytes[2], &dataBytes[3], &dataBytes[4], &dataBytes[5], &dataBytes[6], &dataBytes[7], &parityByte);
-  for (int i = 0; i < 8; i++)
+  int parityByte[8] = {0,0,0,0,0,0,0,0};
+  // fscanf(dataFiles[0], "%3d%4d%4d%4d%4d%4d%4d%4d%4d", &dataBytes[0], &dataBytes[1], &dataBytes[2], &dataBytes[3], &dataBytes[4], &dataBytes[5], &dataBytes[6], &dataBytes[7], &parityByte);
+  // for (int i = 0; i < 8; i++)
+  // {
+  //   printf("%d", dataBytes[i]);
+  // }
+  // printf("\n");
+  // printf("%d", parityByte);
+
+  while (!feof(dataFiles[0]))
   {
-    printf("%d", dataBytes[i]);
+    printf("line\n");
   }
-  printf("\n");
-  printf("%d", parityByte);
   
+
   for (int k = 0; k < NUM_FILES; k++) { // closes all files in file array
     fclose(dataFiles[k]);
   }
