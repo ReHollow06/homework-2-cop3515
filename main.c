@@ -69,7 +69,8 @@ bool checksum(int sumDataItems, int checksumVal)
 {
   int totalSum = sumDataItems + checksumVal;
   int complement = ~totalSum;
-  printf("Sum after adding checksum = %d, binary", )
+  printf("Sum after adding checksum = %d, binary = %d\n", totalSum, decToBin(totalSum));
+  printf("Sum after complement = %d\n", complement);
 
 }
 
@@ -151,7 +152,7 @@ int main(void)
   int checksumVal = 0;
   int checksumValBin = 0;
 
-  fscanf(dataFiles[1], "%3d%4d%4d%4d%4d%4d%4d%4d%4d", &dataBytes[0], &dataBytes[1], &dataBytes[2], &dataBytes[3], &dataBytes[4], &dataBytes[5], &dataBytes[6], &dataBytes[7], &checksumVal);
+  fscanf(dataFiles[1], "%4d%4d%4d%4d%4d%4d%4d%4d%4d", &dataBytes[0], &dataBytes[1], &dataBytes[2], &dataBytes[3], &dataBytes[4], &dataBytes[5], &dataBytes[6], &dataBytes[7], &checksumVal);
 
   printf("\nData stream:");
 
@@ -176,11 +177,11 @@ int main(void)
 
   if (checksum(sumDataBytes, checksumVal) == true)
   {
-    printf("Checksum: No errors in transmission");
+    printf("Checksum: No errors in transmission\n\n");
   }
   else
   {
-    printf("Checksum: Errors in transmission");
+    printf("Checksum: Errors in transmission\n\n");
   }
   
 
