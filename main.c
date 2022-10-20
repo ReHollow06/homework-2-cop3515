@@ -470,28 +470,33 @@ int main(void)
 
     for (int i = 0; i < dataMatrixColumn; i++)
     {
-      arrayOutFormatted(dataMatrix[i], dataMatrixRow, "%4d");
+      arrayOutFormatted(dataMatrix[i], dataMatrixRow, "%d ");
       printf(" [V:%4d] [H:%4d]\n", parityByteMatrix[i][0], parityByteMatrix[i][1]);
     }
 
     for (int i = 0; i < dataMatrixColumn; i++) // VERTICAL PROCESSING
     {
       int currentColumn[8];
-      printf("\n** Vertical processing transmission line %d\n\n", i);
+      int parityBitArray[8];
+      decToBinArray(parityByteMatrix[i][0], parityBitArray, 8);
+      //printf("\n** Vertical processing transmission line %d\n\n", i);
       for (int j = 0; j < dataMatrixRow; j++)
       {
         int dataByteBin[8];
         currentColumn[j] = dataMatrix[j][i];
-        printf("Value %d: %4d, Binary: ", j + 1, dataMatrix[j][i]);
+        //printf("Value %d: %4d, Binary: ", j + 1, dataMatrix[j][i]);
         decToBinArray(dataMatrix[j][i], dataByteBin, 8);
-        arrayOut(dataByteBin, 8);
-        printf("\n");
+        //arrayOut(dataByteBin, 8);
+        //printf(", Parity Bit: %d", parityBitArray[j]);
+        //printf("\n");
       }
       printf("\n");
-      printf("Vertical Parity Byte: %d\n", parityByteMatrix[i][0]);
+      //printf("Vertical Parity Byte: %d\n", parityByteMatrix[i][0]);
 
       if (hasVerticalParity(currentColumn, 8, parityByteMatrix[i][0]))
       {
+        //arrayOut(currentColumn, 8);
+        //printf("\n");
         printf("Transmission Line %d passed vertical parity\n", i);
         numVertParityChecksPassed++;
       }
@@ -502,6 +507,8 @@ int main(void)
 
       printf("\n");
     }
+
+    //printf("Passed: %d\n\n", numVertParityChecksPassed);
 
     if (numVertParityChecksPassed == dataMatrixColumn)
     {
@@ -516,18 +523,22 @@ int main(void)
     for (int i = 0; i < dataMatrixColumn; i++) // HORIZONTAL PROCESSING
     {
       int currentRow[8];
-      printf("\n** Horizontal processing transmission line %d\n\n", i);
+      int parityBitArray[8];
+      decToBinArray(parityByteMatrix[i][1], parityBitArray, 8);
+      //printf("\n** Horizontal processing transmission line %d\n\n", i);
       for (int j = 0; j < dataMatrixRow; j++)
       {
         int dataByteBin[8];
         currentRow[j] = dataMatrix[i][j];
-        printf("Value %d: %4d, Binary: ", j + 1, dataMatrix[i][j]);
+        //printf("Value %d: %4d, Binary: ", j + 1, dataMatrix[i][j]);
         decToBinArray(dataMatrix[i][j], dataByteBin, 8);
-        arrayOut(dataByteBin, 8);
-        printf("\n");
+        //arrayOut(dataByteBin, 8);
+        //printf(", Parity Bit: %d", parityBitArray[j]);
+
+        //printf("\n");
       }
       printf("\n");
-      printf("Horizontal Parity Byte: %d\n", parityByteMatrix[i][1]);
+      //printf("Horizontal Parity Byte: %d\n", parityByteMatrix[i][1]);
 
       if (hasHorizontalParity(currentRow, 8, parityByteMatrix[i][1]))
       {
@@ -539,6 +550,28 @@ int main(void)
         printf("Transmission Line %d failed horizontal parity\n", i);
       }
     }
+
+    //printf("passed: %d\n\n", numHoriParityChecksPassed);
+    printf("\n\n");
+    if (numHoriParityChecksPassed == dataMatrixRow)
+    {
+      passedHorizontalParity = true;
+      printf("Transmission block %d PASSED complete horizontal parity test\n", blockNumber2dParity);
+    }
+    else
+    {
+      printf("Transmission block %d FAILED complete horizontal parity test\n", blockNumber2dParity);
+    }
+
+    if (passedHorizontalParity && passedVerticalParity)
+    {
+      printf("---> Transmission block %d PASSED - it is error free\n", blockNumber2dParity);
+    }
+    else
+    {
+      printf("---> Transmission block %d FAILED - it has errors\n", blockNumber2dParity);
+    }
+    
 
     printf("\n\nPress ENTER to Continue to next block: ");
     char input;
