@@ -287,160 +287,162 @@ int main(void)
   }
 
   // PART 1 PARITY CHECK
-  // printf("\n\n** Part 1 - Parity Check Processing\n\n\n");
+  printf("\n\n** Part 1 - Parity Check Processing\n\n\n");
 
-  // int lineNumberParity = 1;
-  // while (!feof(dataFiles[0]))
-  // {
+  int lineNumberParity = 1;
+  while (!feof(dataFiles[0]))
+  {
 
-  //   int dataBytes[8] = {0, 0, 0, 0, 0, 0, 0, 0};
-  //   int parityByte = 0;
-  //   int parityBitArray[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+    int dataBytes[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+    int parityByte = 0;
+    int parityBitArray[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 
-  //   fscanf(dataFiles[0], "%3d%4d%4d%4d%4d%4d%4d%4d%4d", &dataBytes[0], &dataBytes[1], &dataBytes[2], &dataBytes[3], &dataBytes[4], &dataBytes[5], &dataBytes[6], &dataBytes[7], &parityByte);
+    fscanf(dataFiles[0], "%3d%4d%4d%4d%4d%4d%4d%4d%4d", &dataBytes[0], &dataBytes[1], &dataBytes[2], &dataBytes[3], &dataBytes[4], &dataBytes[5], &dataBytes[6], &dataBytes[7], &parityByte);
 
-  //   decToBinArray(parityByte, parityBitArray, 8);
+    decToBinArray(parityByte, parityBitArray, 8);
 
-  //   printf("==> Transmission line number: %d\n\n\n", lineNumberParity);
-  //   printf("Data stream:\n");
-  //   arrayOutFormatted(dataBytes, 8, "%d ");
-  //   printf("\n\n");
-  //   printf("Parity Byte: %d\n\n", parityByte);
+    printf("==> Transmission line number: %d\n\n\n", lineNumberParity);
+    printf("Data stream:\n");
+    arrayOutFormatted(dataBytes, 8, "%d ");
+    printf("\n\n");
+    printf("Parity Byte: %d\n\n", parityByte);
 
-  //   for (int i = 0; i < 8; i++) // loops through dataBytes and checks parity
-  //   {
-  //     int dataValBin[8] = {0, 0, 0, 0, 0, 0, 0, 0};
-  //     decToBinArray(dataBytes[i], dataValBin, 8);
-  //     printf("Data Item: %d, Binary: ", dataBytes[i]);
-  //     arrayOut(dataValBin, 8);
-  //     printf(", Parity Bit: %d", parityBitArray[i]);
-  //     printf("\n");
+    for (int i = 0; i < 8; i++) // loops through dataBytes and checks parity
+    {
+      int dataValBin[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+      decToBinArray(dataBytes[i], dataValBin, 8);
+      printf("Data Item: %d, Binary: ", dataBytes[i]);
+      arrayOut(dataValBin, 8);
+      printf(", Parity Bit: %d", parityBitArray[i]);
+      printf("\n");
 
-  //     if (hasEvenParity(dataValBin, 8, parityBitArray[i]))
-  //     {
-  //       printf("No error in transmission byte %d\n", i + 1);
-  //     }
-  //     else
-  //     {
-  //       printf("Error in transmission byte %d\n", i + 1);
-  //     }
+      if (hasEvenParity(dataValBin, 8, parityBitArray[i]))
+      {
+        printf("No error in transmission byte %d\n", i + 1);
+      }
+      else
+      {
+        printf("Error in transmission byte %d\n", i + 1);
+      }
 
-  //     printf("\n\n");
-  //   }
-  //   printf("\n");
-  //   // printf("Continue?:");
-  //   // char input;
-  //   // scanf("%c", &input);
-  //   lineNumberParity++;
-  // }
+      printf("\n");
+    }
+    printf("\n");
+    printf("Press ENTER to continue to next line: ");
+    char input;
+    scanf("%c", &input);
+    printf("\n\n");
+    lineNumberParity++;
+  }
 
   // PART 2 CHECKSUM
-  // printf("** Part 2 - Checksum Processing\n\n\n");
-  // int lineNumberChecksum = 1;
-  // while (!feof(dataFiles[1]))
-  // {
+  printf("** Part 2 - Checksum Processing\n\n\n");
+  int lineNumberChecksum = 1;
+  while (!feof(dataFiles[1]))
+  {
 
-  //   int dataBytes[8] = {0, 0, 0, 0, 0, 0, 0, 0};
-  //   int checksumVal = 0;
-  //   int sumDataBytes = 0;
-  //   int finalSum = 0;
+    int dataBytes[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+    int checksumVal = 0;
+    int sumDataBytes = 0;
+    int finalSum = 0;
 
-  //   fscanf(dataFiles[1], "%4d%4d%4d%4d%4d%4d%4d%4d%4d", &dataBytes[0], &dataBytes[1], &dataBytes[2], &dataBytes[3], &dataBytes[4], &dataBytes[5], &dataBytes[6], &dataBytes[7], &checksumVal);
-  //   printf("==> Transmission line number: %d\n\nData stream:\n", lineNumberChecksum);
-  //   arrayOutFormatted(dataBytes, 8, "%d ");
-  //   printf("\n");
-  //   printf("Checksum: %d\n\n", checksumVal);
+    fscanf(dataFiles[1], "%4d%4d%4d%4d%4d%4d%4d%4d%4d", &dataBytes[0], &dataBytes[1], &dataBytes[2], &dataBytes[3], &dataBytes[4], &dataBytes[5], &dataBytes[6], &dataBytes[7], &checksumVal);
+    printf("==> Transmission line number: %d\n\nData stream:\n", lineNumberChecksum);
+    arrayOutFormatted(dataBytes, 8, "%d ");
+    printf("\n");
+    printf("Checksum: %d\n\n", checksumVal);
 
-  //   sumDataBytes = sumArray(dataBytes, 8);
-  //   finalSum = sumDataBytes + checksumVal;
+    sumDataBytes = sumArray(dataBytes, 8);
+    finalSum = sumDataBytes + checksumVal;
 
-  //   if (finalSum <= 255)
-  //   {
-  //     int sumDataBytesBin[8];
-  //     int checksumValBin[8];
-  //     int finalSumBin[8];
-  //     decToBinArray(sumDataBytes, sumDataBytesBin, 8);
-  //     decToBinArray(checksumVal, checksumValBin, 8);
-  //     decToBinArray(finalSum, finalSumBin, 8);
-  //     for (int i = 0; i < 8; i++)
-  //     {
-  //       int dataValBin[8];
-  //       decToBinArray(dataBytes[i], dataValBin, 8);
-  //       printf("parityData[i]: %d, Binary: ", dataBytes[i]);
-  //       arrayOut(dataValBin, 8);
-  //       printf("\n\n");
-  //     }
+    if (finalSum <= 255)
+    {
+      int sumDataBytesBin[8];
+      int checksumValBin[8];
+      int finalSumBin[8];
+      decToBinArray(sumDataBytes, sumDataBytesBin, 8);
+      decToBinArray(checksumVal, checksumValBin, 8);
+      decToBinArray(finalSum, finalSumBin, 8);
+      for (int i = 0; i < 8; i++)
+      {
+        int dataValBin[8];
+        decToBinArray(dataBytes[i], dataValBin, 8);
+        //printf("parityData[i]: %d, Binary: ", dataBytes[i]);
+        //arrayOut(dataValBin, 8);
+        //printf("\n\n");
+      }
 
-  //     printf("Sum of data items: %d, Binary: ", sumDataBytes);
-  //     arrayOut(sumDataBytesBin, 8);
-  //     printf("\n\n");
-  //     printf("Checksum value: %d, Binary: ", checksumVal);
-  //     arrayOut(checksumValBin, 8);
-  //     printf("\n\n\n");
-  //     printf("Sum after adding checksum: %d, Binary: ", finalSum);
-  //     arrayOut(finalSumBin, 8);
-  //     printf("\n");
-  //     printf("Sum after complement: %d, Binary ", numComplement(finalSum));
-  //     int finalSumCompBin[8];
-  //     decToBinArray(numComplement(finalSum), finalSumCompBin, 8);
-  //     arrayOut(finalSumCompBin, 8);
-  //     printf("\n\n");
+      printf("Sum of data items: %d, Binary: ", sumDataBytes);
+      arrayOut(sumDataBytesBin, 8);
+      printf("\n");
+      printf("Checksum value: %d, Binary: ", checksumVal);
+      arrayOut(checksumValBin, 8);
+      printf("\n");
+      printf("Sum after adding checksum: %d, Binary: ", finalSum);
+      arrayOut(finalSumBin, 8);
+      printf("\n");
+      printf("Sum after complement: %d, Binary ", numComplement(finalSum));
+      int finalSumCompBin[8];
+      decToBinArray(numComplement(finalSum), finalSumCompBin, 8);
+      arrayOut(finalSumCompBin, 8);
+      printf("\n\n");
 
-  //     if (numComplement(finalSum) == 0)
-  //     {
-  //       printf("Checksum: No errors in transmission\n\n\n");
-  //     }
-  //     else
-  //     {
-  //       printf("Checksum: Errors in transmission\n\n\n");
-  //     }
-  //   }
-  //   else if (finalSum > 255 && finalSum <= 1023)
-  //   {
-  //     int sumDataBytesBin[10];
-  //     int checksumValBin[10];
-  //     int finalSumBin[10];
-  //     decToBinArray(sumDataBytes, sumDataBytesBin, 10);
-  //     decToBinArray(checksumVal, checksumValBin, 10);
-  //     decToBinArray(finalSum, finalSumBin, 10);
-  //     for (int i = 0; i < 8; i++)
-  //     {
-  //       int dataValBin[10];
-  //       decToBinArray(dataBytes[i], dataValBin, 10);
-  //       printf("parityData[i]: %d, Binary: ", dataBytes[i]);
-  //       arrayOut(dataValBin, 10);
-  //       printf("\n\n\n");
-  //     }
+      if (numComplement(finalSum) == 0)
+      {
+        printf("Checksum: No errors in transmission\n\n");
+      }
+      else
+      {
+        printf("Checksum: Errors in transmission\n\n");
+      }
+    }
+    else if (finalSum > 255 && finalSum <= 1023)
+    {
+      int sumDataBytesBin[10];
+      int checksumValBin[10];
+      int finalSumBin[10];
+      decToBinArray(sumDataBytes, sumDataBytesBin, 10);
+      decToBinArray(checksumVal, checksumValBin, 10);
+      decToBinArray(finalSum, finalSumBin, 10);
+      for (int i = 0; i < 8; i++)
+      {
+        int dataValBin[10];
+        decToBinArray(dataBytes[i], dataValBin, 10);
+        //printf("parityData[i]: %d, Binary: ", dataBytes[i]);
+        //arrayOut(dataValBin, 10);
+        //printf("\n\n\n");
+      }
 
-  //     printf("Sum of data items: %d, Binary: ", sumDataBytes);
-  //     arrayOut(sumDataBytesBin, 10);
-  //     printf("\n\n");
-  //     printf("Checksum value: %d, Binary: ", checksumVal);
-  //     arrayOut(checksumValBin, 10);
-  //     printf("\n\n\n");
-  //     printf("Sum after adding checksum: %d, Binary: ", finalSum);
-  //     arrayOut(finalSumBin, 10);
-  //     printf("\n");
-  //     printf("Sum after complement: %d, Binary ", numComplement(finalSum));
-  //     int finalSumCompBin[10];
-  //     decToBinArray(numComplement(finalSum), finalSumCompBin, 10);
-  //     arrayOut(finalSumCompBin, 10);
-  //     printf("\n\n");
+      printf("Sum of data items: %d, Binary: ", sumDataBytes);
+      arrayOut(sumDataBytesBin, 10);
+      printf("\n");
+      printf("Checksum value: %d, Binary: ", checksumVal);
+      arrayOut(checksumValBin, 10);
+      printf("\n");
+      printf("Sum after adding checksum: %d, Binary: ", finalSum);
+      arrayOut(finalSumBin, 10);
+      printf("\n");
+      printf("Sum after complement: %d, Binary ", numComplement(finalSum));
+      int finalSumCompBin[10];
+      decToBinArray(numComplement(finalSum), finalSumCompBin, 10);
+      arrayOut(finalSumCompBin, 10);
+      printf("\n\n");
 
-  //     if (numComplement(finalSum) == 0)
-  //     {
-  //       printf("Checksum: No errors in transmission\n\n\n");
-  //     }
-  //     else
-  //     {
-  //       printf("Checksum: Errors in transmission\n\n\n");
-  //     }
-  //   }
-  //// printf("Continue?:");
-  //// char input;
-  //// scanf("%c", &input);
-  //   lineNumberChecksum++;
-  // }
+      if (numComplement(finalSum) == 0)
+      {
+        printf("Checksum: No errors in transmission\n\n");
+      }
+      else
+      {
+        printf("Checksum: Errors in transmission\n\n");
+      }
+    }
+    
+    printf("Press ENTER to continue to next line: ");
+    char input;
+    scanf("%c", &input);
+    lineNumberChecksum++;
+  }
 
   // PART 3 2D PARITY
 
@@ -474,6 +476,8 @@ int main(void)
       printf(" [V:%4d] [H:%4d]\n", parityByteMatrix[i][0], parityByteMatrix[i][1]);
     }
 
+    printf("\n--> Processing Columns\n\n");
+
     for (int i = 0; i < dataMatrixColumn; i++) // VERTICAL PROCESSING
     {
       int currentColumn[8];
@@ -490,7 +494,7 @@ int main(void)
         //printf(", Parity Bit: %d", parityBitArray[j]);
         //printf("\n");
       }
-      printf("\n");
+      //printf("\n");
       //printf("Vertical Parity Byte: %d\n", parityByteMatrix[i][0]);
 
       if (hasVerticalParity(currentColumn, 8, parityByteMatrix[i][0]))
@@ -505,8 +509,8 @@ int main(void)
         printf("Transmission Line %d failed vertical parity\n", i);
       }
 
-      printf("\n");
     }
+    printf("\n");
 
     //printf("Passed: %d\n\n", numVertParityChecksPassed);
 
@@ -519,6 +523,9 @@ int main(void)
     {
       printf("Transmission block %d FAILED complete vertical parity test\n", blockNumber2dParity);
     }
+
+    printf("\n");
+    printf("\n--> Processing Rows\n\n");
 
     for (int i = 0; i < dataMatrixColumn; i++) // HORIZONTAL PROCESSING
     {
@@ -537,7 +544,7 @@ int main(void)
 
         //printf("\n");
       }
-      printf("\n");
+      //printf("\n");
       //printf("Horizontal Parity Byte: %d\n", parityByteMatrix[i][1]);
 
       if (hasHorizontalParity(currentRow, 8, parityByteMatrix[i][1]))
@@ -573,7 +580,7 @@ int main(void)
     }
     
 
-    printf("\n\nPress ENTER to Continue to next block: ");
+    printf("\n\nPress ENTER to continue to next block: ");
     char input;
     scanf("%c", &input);
     blockNumber2dParity++;
